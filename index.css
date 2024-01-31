@@ -1,0 +1,231 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@font-face {
+  font-family: "YourFont";
+  src: url("your-font.woff2") format("woff2");
+  font-display: swap;
+}
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+.main-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+}
+.country-list {
+  width: 98%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+.list-view {
+  min-width: 280px;
+  width: 18%;
+  height: 150px;
+  background: transparent;
+  box-shadow: inset 0px 0px 15px, 0 0 12px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  border: 2px solid #0494ef;
+}
+.div-container {
+  padding: 0;
+  margin: 0;
+  padding-left: 10px;
+  width: 100%;
+  height: 30%;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.time-view {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  color: #000;
+}
+p {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto";
+  color: gray;
+}
+.separator {
+  width: 100%;
+  border: 1px solid skyblue;
+  box-shadow: 0 0 14px;
+}
+.view-names {
+  width: 100%;
+  height: 1rem;
+  font-size: 16px;
+  color: #262626;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 0;
+  gap: 5px;
+  margin: 0;
+}
+.span-view {
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  color: #000;
+  font-weight: 600;
+  font-family: "Roboto";
+  position: relative;
+  cursor: pointer;
+}
+
+.span-view::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  background: blue;
+  width: 100%;
+  transition: transform 0.2s ease-in-out;
+  bottom: 0;
+  left: 0;
+  transform-origin: left top;
+  transform: scaleX(0);
+}
+
+.span-view:hover::after {
+  transform: scaleX(1);
+}
+
+.day-detail {
+  width: 100%;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+}
+.day-con {
+  margin: 0;
+  width: 50%;
+  height: 1rem;
+  align-items: center;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.date-para {
+  font-weight: bolder;
+  font-size: 12px;
+  font-family: "Roboto";
+  background: linear-gradient(blue, red);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.time-contaier-view {
+  width: 100%;
+  display: flex;
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  height: 85%;
+}
+.timer {
+  width: 75%;
+  height: 30%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+.time-count {
+  height: 2.2rem;
+  width: 1.8rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #0494ef;
+  color: #000;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  box-shadow: inset 0 0 8px skyblue, 0 0 14px;
+  border-radius: 5px;
+}
+.span-time {
+  font-family: "Roboto";
+  font-size: 25px;
+  color: #000;
+  font-weight: 800;
+}
+
+@media screen and (max-width: 768px) {
+  .list-view {
+    width: 45%;
+  }
+
+  .view-names {
+    font-size: 14px;
+  }
+
+  .time-view {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .country-list {
+    display: flex;
+    width: 75%;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .list-view {
+    width: 85%;
+  }
+
+  .view-names {
+    font-size: 12px;
+  }
+
+  .time-view {
+    font-size: 12px;
+  }
+}
