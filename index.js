@@ -1,4 +1,239 @@
 let displayCountryListEl = document.getElementById("displayAllCountries");
+
+let searchInputEl = document.getElementById("searchContinent");
+let timeZoneAreaEl = document.getElementById("timeZoneArea");
+
+let timeZoneArea = [];
+
+const getCurrentTimeInTimeZone = (timeZone) => {
+  const options = {
+    timeZone: timeZone,
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    hour12: true,
+    timeZoneName: "long",
+  };
+
+  const formatter = new Intl.DateTimeFormat("en-US", options);
+  const timeZoneInfo = formatter.formatToParts();
+
+  return {
+    weekDay: timeZoneInfo[0].value,
+    month: timeZoneInfo[2].value,
+    date: timeZoneInfo[4].value,
+    year: timeZoneInfo[6].value,
+    hour: timeZoneInfo[8].value,
+    minute: timeZoneInfo[10].value,
+    second: timeZoneInfo[12].value,
+    dayPeriod: timeZoneInfo[14].value,
+    timeZoneCity: timeZoneInfo[16].value,
+    continentName: timeZone.split("/")[0],
+  };
+};
+
+const updateList = (allContinents) => {
+  displayCountryListEl.innerHTML = "";
+
+  for (let each of allContinents) {
+    each.timeZones.forEach((tz) => {
+      const country = getCurrentTimeInTimeZone(tz);
+
+      console.log(country);
+      let listEl = document.createElement("li");
+      listEl.classList.add("list-view");
+
+      let divEl = document.createElement("div");
+      divEl.classList.add("div-container");
+
+      divEl.appendChild(
+        (() => {
+          let conOne = document.createElement("div");
+          conOne.classList.add("view-names");
+          let spanOne = document.createElement("span");
+          spanOne.classList.add("span-view");
+          spanOne.textContent = "Continent : ";
+          conOne.appendChild(spanOne);
+
+          let paraOne = document.createElement("p");
+          paraOne.textContent = `${country.continentName}`;
+          paraOne.classList.add("date-para");
+          conOne.appendChild(paraOne);
+
+          return conOne;
+        })()
+      );
+      divEl.appendChild(
+        (() => {
+          let conTwo = document.createElement("div");
+          conTwo.classList.add("view-names");
+          let spanOne = document.createElement("span");
+          spanOne.classList.add("span-view");
+          spanOne.textContent = "TimeZone :  ";
+          conTwo.appendChild(spanOne);
+
+          let paraOne = document.createElement("p");
+          paraOne.classList.add("date-para");
+          paraOne.textContent = `${country.timeZoneCity}`;
+          conTwo.appendChild(paraOne);
+
+          return conTwo;
+        })()
+      );
+      listEl.appendChild(divEl);
+
+      // Add a separator
+      let separator = document.createElement("hr");
+      separator.classList.add("separator");
+      listEl.appendChild(separator);
+
+      // Display current time
+      let timeEl = document.createElement("div");
+      timeEl.classList.add("time-view");
+
+      let dayDetailEl = document.createElement("div");
+      dayDetailEl.classList.add("day-detail");
+
+      dayDetailEl.appendChild(
+        (() => {
+          let dayEl = document.createElement("div");
+          dayEl.classList.add("day-con");
+          let spanOne = document.createElement("span");
+          spanOne.classList.add("span-view");
+          spanOne.textContent = "Week Day : ";
+          dayEl.appendChild(spanOne);
+          let day = document.createElement("p");
+          day.textContent = `${country.weekDay}`;
+          day.classList.add("date-para");
+          dayEl.appendChild(day);
+          return dayEl;
+        })()
+      );
+      dayDetailEl.appendChild(
+        (() => {
+          let dayEl = document.createElement("div");
+          dayEl.classList.add("day-con");
+          let spanOne = document.createElement("span");
+          spanOne.classList.add("span-view");
+          spanOne.textContent = "Date : ";
+          dayEl.appendChild(spanOne);
+          let day = document.createElement("p");
+          day.classList.add("date-para");
+          day.textContent = ` ${country.date}/${country.month}/${country.year}`;
+          dayEl.appendChild(day);
+          return dayEl;
+        })()
+      );
+      timeEl.appendChild(dayDetailEl);
+      listEl.appendChild(timeEl);
+
+      // Display current time
+      let timeViewEl = document.createElement("div");
+      timeViewEl.classList.add("time-contaier-view");
+
+      timeViewEl.appendChild(
+        (() => {
+          let timerEl = document.createElement("div");
+          timerEl.classList.add("timer");
+
+          timerEl.appendChild(
+            (() => {
+              const hourShow =
+                country.hour.length === 1
+                  ? `0${country.hour}`
+                  : `${country.hour}`;
+
+              let hourEl = document.createElement("div");
+              hourEl.classList.add("space-element");
+              let hourLeft = document.createElement("p");
+              hourLeft.classList.add("time-count");
+              hourLeft.textContent = hourShow.split("")[0];
+              hourEl.appendChild(hourLeft);
+
+              let hourRight = document.createElement("p");
+              hourRight.classList.add("time-count");
+              hourRight.textContent = hourShow.split("")[1];
+              hourEl.appendChild(hourRight);
+
+              return hourEl;
+            })()
+          );
+
+          let spanOne = document.createElement("span");
+          spanOne.textContent = ":";
+          spanOne.classList.add("span-time");
+          timerEl.appendChild(spanOne);
+
+          timerEl.appendChild(
+            (() => {
+              let minuteShow =
+                country.minute.length === 1
+                  ? `0${country.minute}`
+                  : `${country.minute}`;
+
+              let minuteEl = document.createElement("div");
+              minuteEl.classList.add("space-element");
+              let minuteLeft = document.createElement("p");
+              minuteLeft.classList.add("time-count");
+              minuteLeft.textContent = minuteShow.split("")[0];
+              minuteEl.appendChild(minuteLeft);
+              let minuteRight = document.createElement("p");
+              minuteRight.classList.add("time-count");
+              minuteRight.textContent = minuteShow.split("")[1];
+              minuteEl.appendChild(minuteRight);
+              return minuteEl;
+            })()
+          );
+
+          let spanTwo = document.createElement("span");
+          spanTwo.textContent = ":";
+          spanTwo.classList.add("span-time");
+          timerEl.appendChild(spanTwo);
+
+          timerEl.appendChild(
+            (() => {
+              const secondShow =
+                country.second.length === 1
+                  ? `0${country.second}`
+                  : `${country.second}`;
+              let secondEl = document.createElement("div");
+              secondEl.classList.add("space-element");
+
+              let secondRight = document.createElement("p");
+              secondRight.classList.add("time-count");
+              secondRight.textContent = secondShow.split("")[0];
+              secondEl.appendChild(secondRight);
+
+              let secondLeft = document.createElement("p");
+              secondLeft.classList.add("time-count");
+              secondLeft.textContent = secondShow.split("")[1];
+              secondEl.appendChild(secondLeft);
+
+              return secondEl;
+            })()
+          );
+          let spanThree = document.createElement("span");
+          spanThree.textContent = ":";
+          spanThree.classList.add("span-time");
+          timerEl.appendChild(spanThree);
+
+          let secondRight = document.createElement("p");
+          secondRight.classList.add("pm");
+          secondRight.textContent = country.dayPeriod;
+          timerEl.appendChild(secondRight);
+
+          return timerEl;
+        })()
+      );
+      timeEl.appendChild(timeViewEl);
+      displayCountryListEl.appendChild(listEl);
+    });
+  }
+};
 let allContinents = [
   {
     continentalName: "North America",
@@ -458,176 +693,19 @@ let allContinents = [
   },
   { continentalName: "South America", id: "SOUTH_AMERICA", timeZones: [] },
 ];
+let enterInput = "";
 
-const getCurrentTimeInTimeZone = (timeZone) => {
-  const options = {
-    timeZone: timeZone,
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    hour12: true,
-    timeZoneName: "long",
-  };
+searchInputEl.addEventListener("input", (e) => {
+  enterInput = e.target.value;
+  const continentList = allContinents.filter((each) =>
+    each.continentalName.toLowerCase().includes(enterInput.toLowerCase())
+  );
 
-  const formatter = new Intl.DateTimeFormat("en-US", options);
-  const timeZoneInfo = formatter.formatToParts();
+  const updateInt = setInterval(() => {
+    updateList(enterInput.length > 0 ? continentList : allContinents);
+  }, 1000);
+});
 
-  return {
-    weekDay: timeZoneInfo[0].value,
-    month: timeZoneInfo[2].value,
-    date: timeZoneInfo[4].value,
-    year: timeZoneInfo[6].value,
-    hour: timeZoneInfo[8].value,
-    minute: timeZoneInfo[10].value,
-    second: timeZoneInfo[12].value,
-    dayPeriod: timeZoneInfo[14].value,
-    timeZoneCity: timeZoneInfo[16].value,
-    continentName: timeZone.split("/")[0],
-  };
-};
-
-const updateList = () => {
-  displayCountryListEl.innerHTML = "";
-
-  for (let each of allContinents) {
-    each.timeZones.forEach((tz) => {
-      const country = getCurrentTimeInTimeZone(tz);
-      let listEl = document.createElement("li");
-      listEl.classList.add("list-view");
-
-      let divEl = document.createElement("div");
-      divEl.classList.add("div-container");
-
-      divEl.appendChild(
-        (() => {
-          let conOne = document.createElement("div");
-          conOne.classList.add("view-names");
-          let spanOne = document.createElement("span");
-          spanOne.classList.add("span-view");
-          spanOne.textContent = "Continent : ";
-          conOne.appendChild(spanOne);
-
-          let paraOne = document.createElement("p");
-          paraOne.textContent = `${country.continentName}`;
-          paraOne.classList.add("date-para");
-          conOne.appendChild(paraOne);
-
-          return conOne;
-        })()
-      );
-      divEl.appendChild(
-        (() => {
-          let conTwo = document.createElement("div");
-          conTwo.classList.add("view-names");
-          let spanOne = document.createElement("span");
-          spanOne.classList.add("span-view");
-          spanOne.textContent = "TimeZone :  ";
-          conTwo.appendChild(spanOne);
-
-          let paraOne = document.createElement("p");
-          paraOne.classList.add("date-para");
-          paraOne.textContent = `${country.timeZoneCity}`;
-          conTwo.appendChild(paraOne);
-
-          return conTwo;
-        })()
-      );
-      listEl.appendChild(divEl);
-
-      // Add a separator
-      let separator = document.createElement("hr");
-      separator.classList.add("separator");
-      listEl.appendChild(separator);
-
-      // Display current time
-      let timeEl = document.createElement("div");
-      timeEl.classList.add("time-view");
-
-      let dayDetailEl = document.createElement("div");
-      dayDetailEl.classList.add("day-detail");
-
-      dayDetailEl.appendChild(
-        (() => {
-          let dayEl = document.createElement("div");
-          dayEl.classList.add("day-con");
-          let spanOne = document.createElement("span");
-          spanOne.classList.add("span-view");
-          spanOne.textContent = "Week Day : ";
-          dayEl.appendChild(spanOne);
-          let day = document.createElement("p");
-          day.textContent = `${country.weekDay}`;
-          day.classList.add("date-para");
-          dayEl.appendChild(day);
-          return dayEl;
-        })()
-      );
-      dayDetailEl.appendChild(
-        (() => {
-          let dayEl = document.createElement("div");
-          dayEl.classList.add("day-con");
-          let spanOne = document.createElement("span");
-          spanOne.classList.add("span-view");
-          spanOne.textContent = "Date : ";
-          dayEl.appendChild(spanOne);
-          let day = document.createElement("p");
-          day.classList.add("date-para");
-          day.textContent = ` ${country.date} / ${country.month} / ${country.year}`;
-          dayEl.appendChild(day);
-          return dayEl;
-        })()
-      );
-      timeEl.appendChild(dayDetailEl);
-      listEl.appendChild(timeEl);
-
-      // Display current time
-      let timeViewEl = document.createElement("div");
-      timeViewEl.classList.add("time-contaier-view");
-      timeViewEl.appendChild(
-        (() => {
-          let hourEl = document.createElement("div");
-          console.log(typeof country.hour);
-          hourEl.classList.add("timer");
-          let hour = document.createElement("p");
-          hour.classList.add("time-count");
-          hour.textContent =
-            country.hour.length === 1 ? `0${country.hour}` : `${country.hour}`;
-          hourEl.appendChild(hour);
-          let spanOne = document.createElement("span");
-          spanOne.textContent = ":";
-          spanOne.classList.add("span-time");
-          hourEl.appendChild(spanOne);
-
-          let minute = document.createElement("p");
-          minute.classList.add("time-count");
-          minute.textContent =
-            country.minute.length === 1
-              ? `0${country.minute}`
-              : `${country.minute}`;
-          hourEl.appendChild(minute);
-          let spanTwo = document.createElement("span");
-          spanTwo.textContent = ":";
-          spanTwo.classList.add("span-time");
-          hourEl.appendChild(spanTwo);
-
-          let second = document.createElement("p");
-          second.classList.add("time-count");
-          second.textContent =
-            country.second.length === 1
-              ? `0${country.second}`
-              : `${country.second}`;
-          hourEl.appendChild(second);
-
-          return hourEl;
-        })()
-      );
-      timeEl.appendChild(timeViewEl);
-      displayCountryListEl.appendChild(listEl);
-    });
-  }
-};
-
-const updateInterval = setInterval(updateList, 1000);
+const initialUpdateInt = setInterval(() => {
+  updateList(allContinents);
+}, 1000);

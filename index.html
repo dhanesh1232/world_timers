@@ -12,8 +12,27 @@
     <title>Digitl Clock</title>
   </head>
   <body>
-    <div class="main-container">
-      <ul class="country-list" id="displayAllCountries"></ul>
+    <div class="page-container">
+      <nav class="header-container">
+        <div class="title-container">
+          <h4>World Clock</h4>
+        </div>
+        <div class="control-container">
+          <div class="search-container">
+            <input
+              type="search"
+              placeholder="Search Time Zone"
+              id="searchContinent"
+            />
+          </div>
+          <select class="drop-down" id="timeZoneArea">
+            <option value="Select Time Zone">Select Time Zone</option>
+          </select>
+        </div>
+      </nav>
+      <div class="main-container">
+        <ul class="country-list" id="displayAllCountries"></ul>
+      </div>
     </div>
     <script src="index.js"></script>
   </body>
