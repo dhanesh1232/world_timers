@@ -123,7 +123,9 @@ const updateList = (allContinents) => {
           dayEl.appendChild(spanOne);
           let day = document.createElement("p");
           day.classList.add("date-para");
-          day.textContent = ` ${country.date}/${country.month}/${country.year}`;
+          let dateValue =
+            country.date.length === 1 ? `0${country.date}` : `${country.date}`;
+          day.textContent = `${dateValue}-${country.month}-${country.year}`;
           dayEl.appendChild(day);
           return dayEl;
         })()
